@@ -7,8 +7,11 @@ const quotesSchema = new mongoose.Schema({
   },
   quote: {
     type: String,
-
     required: true,
+  },
+  date: {
+    type: Date,
+    default: Date.now,
   },
 })
 

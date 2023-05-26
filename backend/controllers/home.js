@@ -13,17 +13,15 @@ module.exports = {
 
   createQuotes: async (req, res) => {
     try {
-      const newQuote = new Itemlist({
+      await Quotelist.create({
         author: req.body.author,
+
         quote: req.body.quote,
       })
-
-      await newQuote.save()
-      console.log(newQuote)
-
+      console.log('Quote has been added!')
       res.redirect('/')
-    } catch (error) {
-      res.status(500).send(error)
+    } catch (err) {
+      console.log(err)
     }
   },
 }

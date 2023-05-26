@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState, useEffect } from 'react'
 import axios from 'axios'
 
 const Form = () => {
@@ -13,12 +13,19 @@ const Form = () => {
   const fetchQuotes = async () => {
     try {
       const response = await axios.get('http://localhost:4000/')
-      const data = await response.data
-      console.log(data.quoteslist)
+      const data = response.data
       setQuotes(data.quoteslist)
     } catch (error) {
       console.log(error)
     }
+  }
+
+  const handleAuthorChange = (event) => {
+    setAuthor(event.target.value)
+  }
+
+  const handleQuoteChange = (event) => {
+    setQuote(event.target.value)
   }
 
   const addQuotes = async () => {
@@ -35,24 +42,14 @@ const Form = () => {
     }
   }
 
-  const handleAuthorChange = (event) => {
-    setAuthor(event.target.value)
-  }
-
-  const handleQuoteChange = (event) => {
-    setQuote(event.target.value)
-  }
-
   return (
     <>
       <form action='/new' method='POST'>
         <div className='grid grid-cols-6 gap-4 col-span-full lg:col-span-3'>
           <div className='col-span-full sm:col-span-3'>
-            <label htmlFor='author' className='text-sm'>
-              Author
-            </label>
+            <label className='text-sm'>Author</label>
             <input
-              name='author'
+              name='name'
               type='text'
               placeholder='Author'
               value={author}
@@ -62,29 +59,31 @@ const Form = () => {
           </div>
 
           <div className='col-span-full'>
-            <label htmlFor='quote' className='text-sm'>
-              Quote
-            </label>
+            <label className='text-sm'>Quote</label>
             <textarea
-              name='quote'
+              name='text'
               placeholder='Quote'
               value={quote}
               onChange={handleQuoteChange}
               className='w-full rounded-md focus:ring focus:ring-opacity-75 bg-white'
             ></textarea>
           </div>
-          <button type='button' onClick={addQuotes}>
+          <button
+            type='button'
+            onClick={addQuotes}
+            className='border-2 p-2 bg-blue-50'
+          >
             Submit
           </button>
         </div>
       </form>
 
       <div>
-        {/* display here */}
+        {/* Display quotes here */}
         {quotes.map((quote) => (
-          <div key={quote._id}>
-            <span>{quote.author}</span>
+          <div key={quote._id} className='p-10'>
             <p>{quote.quote}</p>
+            <span className='p-10'>~{quote.author}</span>
           </div>
         ))}
       </div>

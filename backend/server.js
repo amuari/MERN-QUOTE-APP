@@ -8,6 +8,7 @@ const cors = require('cors')
 // middlewares
 require('dotenv').config({ path: './config/.env' })
 app.use(express.urlencoded({ extended: true }))
+app.use(express.json())
 app.use(cors())
 // connect to database
 connectDB()
